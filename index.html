@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AURA™ — 3D Sculpted Hydration Vessels & Thermal Flasks</title>
+  <meta name="description" content="Experience the next generation of precision-engineered hydration vessels. Interactive 3D bottle customizer, thermal physics, and real-time laser engraving." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./src/style.css" />
+</head>
+<body class="dark-theme">
+  <!-- Top Navigation -->
+  <header class="site-header">
+    <div class="nav-container">
+      <div class="brand-logo">
+        <span class="logo-mark">▲</span>
+        <span class="brand-name">AURA<span class="accent-dot">.</span></span>
+        <span class="badge-tag">LABS 3D</span>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#studio" class="nav-link active">3D Studio</a>
+        <a href="#features" class="nav-link">Engineering</a>
+        <a href="#collection" class="nav-link">Collection</a>
+        <a href="#calculator" class="nav-link">Eco Impact</a>
+        <a href="#performance" class="nav-link">Thermal Tech</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button id="audio-toggle" class="icon-btn" title="Toggle Soundscapes (Synthesized Audio)" aria-label="Toggle Sound">
+          <svg class="audio-on-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          <svg class="audio-off-icon hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+        </button>
+
+        <button id="cart-btn" class="cart-btn" aria-label="Open Cart">
+          <span class="cart-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          </span>
+          <span class="cart-label">Cart</span>
+          <span id="cart-count" class="cart-badge">1</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Hero / 3D Studio Section -->
+  <main>
+    <section id="studio" class="hero-studio-section">
+      <!-- 3D WebGL Canvas Container -->
+      <div id="canvas-container" class="canvas-container">
+        <!-- Three.js canvas will be injected here -->
+        <div id="canvas-loader" class="canvas-loader">
+          <div class="loader-spinner"></div>
+          <p class="loader-text">Sculpting Precision Mesh...</p>
+        </div>
+
+        <!-- 3D Hotspot Interactive Overlays -->
+        <div id="hotspot-cap" class="hotspot" data-target="cap">
+          <div class="hotspot-pulse"></div>
+          <div class="hotspot-dot"></div>
+          <div class="hotspot-card">
+            <h4>AeroLock™ Magnetic Cap</h4>
+            <p>100% leakproof vacuum seal with medical-grade silicone gasket.</p>
+          </div>
+        </div>
+
+        <div id="hotspot-body" class="hotspot" data-target="body">
+          <div class="hotspot-pulse"></div>
+          <div class="hotspot-dot"></div>
+          <div class="hotspot-card">
+            <h4>Triple-Wall ThermoShield™</h4>
+            <p>Aerogel vacuum chamber keeps liquids ice cold 32h / piping hot 16h.</p>
+          </div>
+        </div>
+
+        <div id="hotspot-engraving" class="hotspot" data-target="engraving">
+          <div class="hotspot-pulse"></div>
+          <div class="hotspot-dot"></div>
+          <div class="hotspot-card">
+            <h4>Precision Laser Etch</h4>
+            <p>Fiber-optic permanent nanometer engraving for personalization.</p>
+          </div>
+        </div>
+
+        <div id="hotspot-base" class="hotspot" data-target="base">
+          <div class="hotspot-pulse"></div>
+          <div class="hotspot-dot"></div>
+          <div class="hotspot-card">
+            <h4>Acoustic Dampener Base</h4>
+            <p>Silent landing silicone bumper prevents dings, dents & tabletop clatter.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Header Overlays -->
+      <div class="hero-overlay-content">
+        <div class="hero-badge">
+          <span class="award-star">★</span> Red Dot Award Winner 2026 • Best Industrial Design
+        </div>
+        <h1 class="hero-title">
+          THE ART OF <span class="gradient-text">PURE HYDRATION</span>
+        </h1>
+        <p class="hero-subtitle">
+          Sculpted from aerospace titanium & surgical glass. Tailor your finish, laser-etch your signature, and preview real-time liquid physics in 3D.
+        </p>
+
+        <!-- Live telemetry pill -->
+        <div class="live-telemetry">
+          <div class="telemetry-item">
+            <span class="telemetry-label">THERMAL STATUS</span>
+            <span id="telemetry-temp" class="telemetry-val">4°C • CHILLED</span>
+          </div>
+          <div class="telemetry-divider"></div>
+          <div class="telemetry-item">
+            <span class="telemetry-label">CAPACITY</span>
+            <span id="telemetry-capacity" class="telemetry-val">750 ML / 25 OZ</span>
+          </div>
+          <div class="telemetry-divider"></div>
+          <div class="telemetry-item">
+            <span class="telemetry-label">EST. WEIGHT</span>
+            <span id="telemetry-weight" class="telemetry-val">285G ULTRA-LIGHT</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Studio Quick Toolbars (Floating HUD) -->
+      <div class="studio-controls-bar">
+        <!-- Camera Presets -->
+        <div class="control-group">
+          <span class="group-title">CAMERA</span>
+          <div class="btn-pill-group">
+            <button class="cam-btn active" data-cam="hero" title="Full View">Overview</button>
+            <button class="cam-btn" data-cam="cap" title="Cap & Spout View">Cap</button>
+            <button class="cam-btn" data-cam="engraving" title="Laser Engraving View">Engrave</button>
+            <button class="cam-btn" data-cam="base" title="Base View">Base</button>
+            <button class="cam-btn" id="explode-btn" title="Exploded Architecture View">
+              <span class="btn-sparkle">✦</span> Anatomy
+            </button>
+          </div>
+        </div>
+
+        <!-- Turntable & Lighting -->
+        <div class="control-group">
+          <span class="group-title">STUDIO ENVIRONMENT</span>
+          <div class="btn-pill-group">
+            <button id="autorotate-btn" class="pill-btn active" title="Turntable 360°">
+              <span class="rotate-icon">↻</span> Spin
+            </button>
+            <button class="light-btn active" data-env="studio" title="Clean Minimalist Studio">Studio</button>
+            <button class="light-btn" data-env="cyber" title="Cyberpunk Neon Blue/Violet">Neon</button>
+            <button class="light-btn" data-env="sunset" title="Golden Hour Warmth">Sunset</button>
+          </div>
+        </div>
+
+        <!-- Snapshot -->
+        <div class="control-group">
+          <button id="snapshot-btn" class="action-btn highlight-btn" title="Export 4K Studio Image">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            Capture 4K
+          </button>
+        </div>
+      </div>
+
+      <!-- Floating Customizer Drawer / Panel (Right Side) -->
+      <aside class="customizer-panel" id="customizer-panel">
+        <div class="customizer-header">
+          <div class="header-titles">
+            <span class="panel-eyebrow">CONFIGURATOR</span>
+            <h3 class="panel-title">Sculpt Your AURA</h3>
+          </div>
+          <div class="price-display">
+            <span class="currency">$</span>
+            <span id="current-price" class="price-amount">68</span>
+          </div>
+        </div>
+
+        <!-- Config Tabs -->
+        <div class="config-tabs">
+          <button class="config-tab active" data-tab="model">Model</button>
+          <button class="config-tab" data-tab="finish">Finish & Color</button>
+          <button class="config-tab" data-tab="cap">Cap Style</button>
+          <button class="config-tab" data-tab="liquid">Liquid Physics</button>
+          <button class="config-tab" data-tab="engrave">Laser Engrave</button>
+        </div>
+
+        <div class="customizer-body">
+          <!-- TAB 1: MODEL SELECTION -->
+          <div class="tab-pane active" id="tab-model">
+            <label class="section-label">Select Silhouette Architecture</label>
+            <div class="model-cards-grid">
+              <div class="model-card active" data-model="urban">
+                <div class="model-badge">Flagship</div>
+                <h4>AURA Urban Pro</h4>
+                <p>Aerodynamic thermal flask with diamond knurl accents.</p>
+                <div class="model-specs">750ml • 32h Cold • Double Wall</div>
+              </div>
+              <div class="model-card" data-model="glass">
+                <div class="model-badge">Artisanal</div>
+                <h4>AURA Crystal Apothecary</h4>
+                <p>Heavy frosted borosilicate glass with refraction caustics.</p>
+                <div class="model-specs">650ml • Pure Taste • Medical Grade</div>
+              </div>
+              <div class="model-card" data-model="smart">
+                <div class="model-badge">Smart Tech</div>
+                <h4>AURA Apex Cyber</h4>
+                <p>Aerospace titanium with OLED digital temp display lid.</p>
+                <div class="model-specs">800ml • OLED Temp • Touch Ring</div>
+              </div>
+              <div class="model-card" data-model="wave">
+                <div class="model-badge">Ergonomic</div>
+                <h4>AURA Kinetic Sport</h4>
+                <p>Dynamic ribbed silhouette sculpted for high velocity grip.</p>
+                <div class="model-specs">1000ml • Quick-Chug • High Flow</div>
+              </div>
+            </div>
+
+            <!-- Volume / Size Selector -->
+            <label class="section-label mt-4">Capacity Scale</label>
+            <div class="size-pill-selector">
+              <button class="size-pill" data-size="500">500 ml <span class="sub">(17 oz)</span></button>
+              <button class="size-pill active" data-size="750">750 ml <span class="sub">(25 oz)</span></button>
+              <button class="size-pill" data-size="1000">1000 ml <span class="sub">(34 oz)</span></button>
+            </div>
+          </div>
+
+          <!-- TAB 2: FINISH & COLOR -->
+          <div class="tab-pane" id="tab-finish">
+            <label class="section-label">Material Surface Treatment</label>
+            <div class="material-toggles">
+              <button class="material-btn active" data-mat="matte">Matte Powdercoat</button>
+              <button class="material-btn" data-mat="brushed">Brushed Metallic</button>
+              <button class="material-btn" data-mat="gloss">Lustrous Ceramic</button>
+              <button class="material-btn" data-mat="frosted">Frosted Glass</button>
+            </div>
+
+            <label class="section-label mt-4">Curated Color Palette</label>
+            <div class="color-palette-grid">
+              <button class="color-swatch active" data-color="#141518" data-name="Obsidian Matte" title="Obsidian Matte" style="--c: #141518"></button>
+              <button class="color-swatch" data-color="#d4d8df" data-name="Titanium Frost" title="Titanium Frost" style="--c: #d4d8df"></button>
+              <button class="color-swatch" data-color="#2d3b36" data-name="Nordic Sage" title="Nordic Sage" style="--c: #2d3b36"></button>
+              <button class="color-swatch" data-color="#914c38" data-name="Terracotta Ember" title="Terracotta Ember" style="--c: #914c38"></button>
+              <button class="color-swatch" data-color="#1c2d4a" data-name="Abyssal Navy" title="Abyssal Navy" style="--c: #1c2d4a"></button>
+              <button class="color-swatch" data-color="#c99f7a" data-name="Champagne Bronze" title="Champagne Bronze" style="--c: #c99f7a"></button>
+              <button class="color-swatch" data-color="#10b981" data-name="Cyber Emerald" title="Cyber Emerald" style="--c: #10b981"></button>
+              <button class="color-swatch" data-color="#f43f5e" data-name="Electric Coral" title="Electric Coral" style="--c: #f43f5e"></button>
+            </div>
+            <p id="active-color-name" class="color-name-caption">Color: Obsidian Matte</p>
+          </div>
+
+          <!-- TAB 3: CAP STYLE -->
+          <div class="tab-pane" id="tab-cap">
+            <label class="section-label">Select Cap Engineering</label>
+            <div class="cap-options-grid">
+              <div class="cap-option active" data-cap="magnetic">
+                <div class="cap-icon-box">🧲</div>
+                <div class="cap-info">
+                  <h5>AeroLock™ Magnetic Loop</h5>
+                  <p>Aircraft aluminum with silicone carry strap & magnetic tether.</p>
+                </div>
+              </div>
+              <div class="cap-option" data-cap="wood">
+                <div class="cap-icon-box">🪵</div>
+                <div class="cap-info">
+                  <h5>Artisanal Walnut & Brass</h5>
+                  <p>Hand-finished sustainably harvested walnut timber top.</p>
+                </div>
+              </div>
+              <div class="cap-option" data-cap="oled">
+                <div class="cap-icon-box">💡</div>
+                <div class="cap-info">
+                  <h5>SmartSense™ OLED Display</h5>
+                  <p>Real-time water temperature touch screen with UV-C purification.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 4: LIQUID PHYSICS -->
+          <div class="tab-pane" id="tab-liquid">
+            <label class="section-label">Internal Liquid Simulation</label>
+            
+            <div class="slider-control">
+              <div class="slider-header">
+                <span>Fill Level</span>
+                <span id="liquid-fill-pct">75%</span>
+              </div>
+              <input type="range" id="liquid-slider" min="0" max="100" value="75" class="custom-range" />
+            </div>
+
+            <label class="section-label mt-4">Beverage Essence & Tint</label>
+            <div class="liquid-types-grid">
+              <button class="liquid-btn active" data-liquid-color="#38bdf8" data-trans="0.95" data-liquid-name="Glacier Spring Water">
+                <span class="liquid-dot" style="background: #38bdf8"></span>
+                <span>Alpine Water</span>
+              </button>
+              <button class="liquid-btn" data-liquid-color="#10b981" data-trans="0.85" data-liquid-name="Matcha Botanical Cold Infusion">
+                <span class="liquid-dot" style="background: #10b981"></span>
+                <span>Matcha Tea</span>
+              </button>
+              <button class="liquid-btn" data-liquid-color="#f59e0b" data-trans="0.80" data-liquid-name="Nitro Amber Cold Brew">
+                <span class="liquid-dot" style="background: #f59e0b"></span>
+                <span>Amber Brew</span>
+              </button>
+              <button class="liquid-btn" data-liquid-color="#e11d48" data-trans="0.85" data-liquid-name="Hibiscus Wild Berry Elixir">
+                <span class="liquid-dot" style="background: #e11d48"></span>
+                <span>Wild Berry</span>
+              </button>
+            </div>
+            <p id="liquid-name-caption" class="color-name-caption">Simulating: Glacier Spring Water</p>
+          </div>
+
+          <!-- TAB 5: LASER ENGRAVING -->
+          <div class="tab-pane" id="tab-engrave">
+            <label class="section-label">Precision Laser Engraving</label>
+            <p class="tab-help">Add your name, callsign, or mantra. It renders directly onto the 3D bottle in real time.</p>
+            
+            <div class="input-group">
+              <input type="text" id="engraving-input" maxlength="16" placeholder="SHREAKS-00" value="AURA • 2026" class="custom-input" />
+              <button id="clear-engrave-btn" class="icon-sub-btn" title="Clear Text">✕</button>
+            </div>
+
+            <label class="section-label mt-4">Typography Style</label>
+            <div class="font-selector-pills">
+              <button class="font-pill active" data-font="sans">Modern Sans</button>
+              <button class="font-pill" data-font="serif">Luxury Serif</button>
+              <button class="font-pill" data-font="mono">Cyber Mono</button>
+            </div>
+
+            <div class="engrave-preview-box">
+              <span class="preview-tag">LIVE TEXTURE PREVIEW</span>
+              <div id="engrave-text-preview" class="engrave-text-preview font-sans">AURA • 2026</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Customizer Footer / Add to Cart CTA -->
+        <div class="customizer-footer">
+          <div class="summary-line">
+            <span id="summary-bottle-desc">AURA Urban Pro 750ml • Obsidian</span>
+            <span class="free-shipping-tag">Free Global Courier</span>
+          </div>
+          <button id="add-to-cart-btn" class="cta-cart-btn">
+            <span class="btn-text">Add Customized Vessel to Cart</span>
+            <span class="btn-arrow">→</span>
+          </button>
+        </div>
+      </aside>
+    </section>
+
+    <!-- Section 2: Interactive 3D Engineering Hotspot Highlights -->
+    <section id="features" class="section-container">
+      <div class="section-header">
+        <span class="eyebrow">AEROSPACE METALLURGY</span>
+        <h2 class="section-heading">Engineered Without Compromise</h2>
+        <p class="section-sub">Every millimeter of the AURA architecture is scrutinized for thermal efficiency, tactile grip, and lifelong resilience.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card interactive-hotspot-card" data-focus="cap">
+          <div class="feature-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Hermetic AeroLock™ Seal</h3>
+          <p>Dual-stage magnetic tension seal withstands 5 bar internal carbonation pressure without a single drop lost in your pack.</p>
+          <div class="feature-action">Inspect Cap in 3D →</div>
+        </div>
+
+        <div class="feature-card interactive-hotspot-card" data-focus="body">
+          <div class="feature-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <h3>Tri-Vacuum Copper Core</h3>
+          <p>Outer stainless steel shell, vacuum barrier, and electrolytic copper radiant reflect layer prevents 99.8% of thermal radiation transfer.</p>
+          <div class="feature-action">Inspect Insulation in 3D →</div>
+        </div>
+
+        <div class="feature-card interactive-hotspot-card" data-focus="engraving">
+          <div class="feature-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <h3>Sub-Micron Laser Etch</h3>
+          <p>Vaporizes powder coat with surgical fiber lasers, revealing the gleaming raw surgical grade 316L titanium underneath.</p>
+          <div class="feature-action">Inspect Laser Etch in 3D →</div>
+        </div>
+
+        <div class="feature-card interactive-hotspot-card" data-focus="base">
+          <div class="feature-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>
+          </div>
+          <h3>Stealth Shock Base</h3>
+          <p>Vulcanized silicone base ring provides whisper-quiet placement on granite surfaces and withstands 2-meter drops onto concrete.</p>
+          <div class="feature-action">Inspect Base in 3D →</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Signature Collection -->
+    <section id="collection" class="section-container bg-subtle">
+      <div class="section-header">
+        <span class="eyebrow">THE SIGNATURE VAULT</span>
+        <h2 class="section-heading">Designed for Every Element</h2>
+        <p class="section-sub">Select your silhouette to immediately transition the 3D studio viewer.</p>
+      </div>
+
+      <div class="collection-cards-wrapper">
+        <!-- Collection Item 1 -->
+        <div class="collection-item">
+          <div class="item-tag">BESTSELLER</div>
+          <div class="item-visual-preview preview-urban">
+            <div class="bottle-silhouette-art urban-art"></div>
+          </div>
+          <div class="item-details">
+            <div class="item-title-row">
+              <h3>AURA Urban Pro</h3>
+              <span class="item-price">$68</span>
+            </div>
+            <p>Our quintessential thermal flask. Double-wall insulated stainless steel with diamond knurl ergonomic cap.</p>
+            <div class="item-specs-pills">
+              <span>750 ml</span>
+              <span>32h Cold</span>
+              <span>316L Steel</span>
+            </div>
+            <button class="load-model-btn" data-load-model="urban">Load in 3D Studio</button>
+          </div>
+        </div>
+
+        <!-- Collection Item 2 -->
+        <div class="collection-item">
+          <div class="item-tag">PURE TASTE</div>
+          <div class="item-visual-preview preview-glass">
+            <div class="bottle-silhouette-art glass-art"></div>
+          </div>
+          <div class="item-details">
+            <div class="item-title-row">
+              <h3>AURA Crystal Apothecary</h3>
+              <span class="item-price">$74</span>
+            </div>
+            <p>Mouth-blown borosilicate crystal glass with walnut timber stopper. Zero chemical leach, pristine organic clarity.</p>
+            <div class="item-specs-pills">
+              <span>650 ml</span>
+              <span>Thermal Glass</span>
+              <span>Walnut Lid</span>
+            </div>
+            <button class="load-model-btn" data-load-model="glass">Load in 3D Studio</button>
+          </div>
+        </div>
+
+        <!-- Collection Item 3 -->
+        <div class="collection-item">
+          <div class="item-tag">SMART ECOSYSTEM</div>
+          <div class="item-visual-preview preview-smart">
+            <div class="bottle-silhouette-art smart-art"></div>
+          </div>
+          <div class="item-details">
+            <div class="item-title-row">
+              <h3>AURA Apex Cyber</h3>
+              <span class="item-price">$89</span>
+            </div>
+            <p>Integrated capacitive OLED cap with UV-C water sterilization cycle and hydration alert haptic rings.</p>
+            <div class="item-specs-pills">
+              <span>800 ml</span>
+              <span>OLED Display</span>
+              <span>UV-C Purify</span>
+            </div>
+            <button class="load-model-btn" data-load-model="smart">Load in 3D Studio</button>
+          </div>
+        </div>
+
+        <!-- Collection Item 4 -->
+        <div class="collection-item">
+          <div class="item-tag">HIGH VELOCITY</div>
+          <div class="item-visual-preview preview-wave">
+            <div class="bottle-silhouette-art wave-art"></div>
+          </div>
+          <div class="item-details">
+            <div class="item-title-row">
+              <h3>AURA Kinetic Sport</h3>
+              <span class="item-price">$62</span>
+            </div>
+            <p>High-flow ergonomic sports bottle with textured dual-tone silicone grip ridges and one-touch chug spout.</p>
+            <div class="item-specs-pills">
+              <span>1000 ml</span>
+              <span>Fast-Flow Lid</span>
+              <span>Dual Grip</span>
+            </div>
+            <button class="load-model-btn" data-load-model="wave">Load in 3D Studio</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Interactive Hydration & Eco-Impact Calculator -->
+    <section id="calculator" class="section-container">
+      <div class="calculator-box">
+        <div class="calc-copy">
+          <span class="eyebrow">ENVIRONMENTAL DIVIDEND</span>
+          <h2 class="section-heading">Your Impact in Numbers</h2>
+          <p>By migrating from single-use plastics to an AURA vessel, calculate your 12-month reduction in oceanic waste, microplastics, and carbon footprint.</p>
+          
+          <div class="calc-inputs">
+            <div class="calc-input-block">
+              <div class="calc-input-label">
+                <span>Daily Water Intake</span>
+                <span id="calc-liters-val">2.5 Liters / Day</span>
+              </div>
+              <input type="range" id="calc-liters-slider" min="1" max="5" step="0.5" value="2.5" class="custom-range" />
+            </div>
+
+            <div class="calc-input-block">
+              <div class="calc-input-label">
+                <span>Reusable Years Projected</span>
+                <span id="calc-years-val">3 Years</span>
+              </div>
+              <input type="range" id="calc-years-slider" min="1" max="10" step="1" value="3" class="custom-range" />
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-results-display">
+          <div class="result-card">
+            <span class="result-number" id="result-bottles">5,475</span>
+            <span class="result-label">Plastic Bottles Eliminated</span>
+            <span class="result-sub">Prevented from landfills & coral reefs</span>
+          </div>
+          <div class="result-card">
+            <span class="result-number" id="result-co2">182<span class="result-unit">kg</span></span>
+            <span class="result-label">Carbon Emissions Prevented</span>
+            <span class="result-sub">Equivalent to 45 mature tree seedlings planted</span>
+          </div>
+          <div class="result-card">
+            <span class="result-number" id="result-savings">$1,368</span>
+            <span class="result-label">Capital Saved</span>
+            <span class="result-sub">Compared to commercial single-use bottled water</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Thermal Retention Tech Benchmark -->
+    <section id="performance" class="section-container bg-subtle">
+      <div class="section-header">
+        <span class="eyebrow">LABORATORY BENCHMARKS</span>
+        <h2 class="section-heading">24-Hour Thermal Degradation Curve</h2>
+        <p class="section-sub">Tested at 25°C ambient lab temperature with calibrated thermocouple logging.</p>
+      </div>
+
+      <div class="thermal-comparison-wrapper">
+        <div class="chart-container-box">
+          <div class="chart-header">
+            <div class="chart-legend">
+              <span class="legend-item"><span class="dot-aura"></span> AURA ThermoShield™</span>
+              <span class="legend-item"><span class="dot-comp"></span> Standard Double Wall</span>
+              <span class="legend-item"><span class="dot-single"></span> Single Wall Flask</span>
+            </div>
+            <div class="mode-toggles">
+              <button class="chart-toggle-btn active" data-temp-mode="cold">Ice Cold Test (4°C)</button>
+              <button class="chart-toggle-btn" data-temp-mode="hot">Piping Hot Test (95°C)</button>
+            </div>
+          </div>
+
+          <!-- Dynamic SVG Thermal Graph -->
+          <div class="svg-graph-container" id="thermal-chart-svg">
+            <svg viewBox="0 0 800 320" class="thermal-svg">
+              <!-- Grid lines -->
+              <line x1="60" y1="40" x2="760" y2="40" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4"/>
+              <line x1="60" y1="100" x2="760" y2="100" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4"/>
+              <line x1="60" y1="160" x2="760" y2="160" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4"/>
+              <line x1="60" y1="220" x2="760" y2="220" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4"/>
+              <line x1="60" y1="280" x2="760" y2="280" stroke="rgba(255,255,255,0.1)"/>
+
+              <!-- Axis labels -->
+              <text x="50" y="45" fill="rgba(255,255,255,0.4)" font-size="11" text-anchor="end">24°C</text>
+              <text x="50" y="105" fill="rgba(255,255,255,0.4)" font-size="11" text-anchor="end">18°C</text>
+              <text x="50" y="165" fill="rgba(255,255,255,0.4)" font-size="11" text-anchor="end">12°C</text>
+              <text x="50" y="225" fill="rgba(255,255,255,0.4)" font-size="11" text-anchor="end">6°C</text>
+              <text x="50" y="285" fill="rgba(255,255,255,0.4)" font-size="11" text-anchor="end">0°C</text>
+
+              <text x="60" y="305" fill="rgba(255,255,255,0.4)" font-size="11">0h</text>
+              <text x="235" y="305" fill="rgba(255,255,255,0.4)" font-size="11">6h</text>
+              <text x="410" y="305" fill="rgba(255,255,255,0.4)" font-size="11">12h</text>
+              <text x="585" y="305" fill="rgba(255,255,255,0.4)" font-size="11">18h</text>
+              <text x="750" y="305" fill="rgba(255,255,255,0.4)" font-size="11">24h</text>
+
+              <!-- Single Wall Path (Heats rapidly) -->
+              <path id="curve-single" d="M 60 260 Q 235 70, 760 50" fill="none" stroke="#ef4444" stroke-width="2.5" opacity="0.6"/>
+              
+              <!-- Competing Double Wall (Moderately good) -->
+              <path id="curve-comp" d="M 60 260 Q 410 200, 760 120" fill="none" stroke="#eab308" stroke-width="2.5" opacity="0.75"/>
+
+              <!-- AURA Curve (Stays ice cold at ~6°C even after 24h) -->
+              <path id="curve-aura" d="M 60 260 Q 410 250, 760 235" fill="none" stroke="#38bdf8" stroke-width="4.5"/>
+              
+              <!-- AURA Callout Point -->
+              <circle cx="760" cy="235" r="5" fill="#38bdf8"/>
+              <text x="740" y="215" fill="#38bdf8" font-size="13" font-weight="700" text-anchor="end">AURA: 5.8°C at 24h</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide-over Cart Drawer -->
+    <div id="cart-drawer" class="cart-drawer">
+      <div class="cart-backdrop" id="cart-backdrop"></div>
+      <div class="cart-panel">
+        <div class="cart-header">
+          <h3>Your Custom Order</h3>
+          <button id="close-cart-btn" class="close-btn" aria-label="Close cart">✕</button>
+        </div>
+
+        <div class="cart-items-list" id="cart-items-container">
+          <!-- Dynamically filled by JS -->
+        </div>
+
+        <div class="cart-summary">
+          <div class="promo-box">
+            <input type="text" id="promo-input" placeholder="Promo Code (Try: AURA10)" class="promo-input" />
+            <button id="apply-promo-btn" class="promo-btn">Apply</button>
+          </div>
+          <p id="promo-msg" class="promo-msg"></p>
+
+          <div class="cost-row">
+            <span>Subtotal</span>
+            <span id="cart-subtotal">$68.00</span>
+          </div>
+          <div class="cost-row discount-row hidden" id="discount-row">
+            <span>Discount (10%)</span>
+            <span id="cart-discount">-$6.80</span>
+          </div>
+          <div class="cost-row">
+            <span>Precision Laser Engraving</span>
+            <span class="text-green">COMPLIMENTARY</span>
+          </div>
+          <div class="cost-row">
+            <span>Express Courier Shipping</span>
+            <span class="text-green">FREE</span>
+          </div>
+          <div class="cost-row total-row">
+            <span>Total</span>
+            <span id="cart-total" class="total-amount">$68.00</span>
+          </div>
+
+          <button id="checkout-btn" class="checkout-btn">
+            Proceed to Secure Checkout →
+          </button>
+          <div class="guarantee-badge">
+            🔒 256-Bit Encrypted • Lifetime Warranty • 30-Day Return
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div class="brand-logo">
+          <span class="logo-mark">▲</span>
+          <span class="brand-name">AURA<span class="accent-dot">.</span></span>
+        </div>
+        <p>Sculpted hydration vessels engineered for longevity, zero-leach purity, and peak aesthetic performance.</p>
+        <div class="status-indicator">
+          <span class="status-dot"></span> WebGL 3D Studio Operational (60 FPS)
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Silhouettes</h4>
+        <a href="#studio" class="footer-link" data-load-model="urban">AURA Urban Pro</a>
+        <a href="#studio" class="footer-link" data-load-model="glass">Crystal Apothecary</a>
+        <a href="#studio" class="footer-link" data-load-model="smart">Apex Cyber Smart</a>
+        <a href="#studio" class="footer-link" data-load-model="wave">Kinetic Sport</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Materials</h4>
+        <span class="footer-text">Aerospace 316L Titanium</span>
+        <span class="footer-text">Borosilicate Cryo Glass</span>
+        <span class="footer-text">Electrostatic Powdercoat</span>
+        <span class="footer-text">Medical Grade Silicone</span>
+      </div>
+
+      <div class="footer-col">
+        <h4>Impact</h4>
+        <span class="footer-text">1% For The Planet Member</span>
+        <span class="footer-text">B-Corp Certified 2026</span>
+        <span class="footer-text">Zero Single-Use Plastic</span>
+        <span class="footer-text">Carbon Neutral Logistics</span>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 AURA Hydration Technologies. All 3D meshes, textures, and designs proprietary.</p>
+      <div class="footer-legal">
+        <span>Privacy Policy</span>
+        <span>Terms of Service</span>
+        <span>Patents Pending</span>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
